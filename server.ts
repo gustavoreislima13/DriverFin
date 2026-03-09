@@ -26,6 +26,14 @@ app.use(express.json());
 const PORT = 3000;
 
 // API Routes
+app.use('/api', (req, res, next) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', '0');
+  res.set('Surrogate-Control', 'no-store');
+  next();
+});
+
 app.get('/api/transactions', (req, res) => {
   try {
     const stmt = db.prepare('SELECT * FROM transactions ORDER BY date DESC');

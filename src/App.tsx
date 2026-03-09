@@ -30,9 +30,10 @@ export default function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const timestamp = new Date().getTime();
         const [txRes, settingsRes] = await Promise.all([
-          fetch('/api/transactions'),
-          fetch('/api/settings')
+          fetch(`/api/transactions?t=${timestamp}`),
+          fetch(`/api/settings?t=${timestamp}`)
         ]);
         
         if (txRes.ok) {
